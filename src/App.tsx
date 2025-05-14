@@ -1,8 +1,11 @@
-function App() {
+import Desserts from "./components/Desserts";
 
+function App() {
   return (
-    <h1>dessert shop</h1>
-  )
+    <div>
+      <Desserts />
+    </div>
+  );
 }
 
-export default App
+export default App;
