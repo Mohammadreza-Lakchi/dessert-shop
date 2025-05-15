@@ -20,7 +20,6 @@ function Desserts() {
         <Dessert
           key={item.name}
           name={item.name}
-          amount={0}
           category={item.category}
           price={item.price}
           image={item.image}
