@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { OrderContext, type OrderContextType } from "../App";
 
 interface DessertProps {
@@ -14,10 +14,21 @@ interface DessertProps {
 }
 
 function Dessert({ name, price, category, image }: DessertProps) {
+  
+  const [order,setOrder] = useContext(OrderContext) as OrderContextType;
+  
   const [amount, setAmount] = useState<number>(0);
 
-  const setOrder = (useContext(OrderContext) as OrderContextType)[1];
+  // logic for removing item from order list
+  useEffect(() => {
+        if (order) {
+      const dessert = order.find(item => item.name == name)
+      !dessert && setAmount(0)
+    }
+  }, [order?.length])
 
+
+  // component handlers
   function addToCartHandler() {
     setOrder((prev) =>
       prev != null
