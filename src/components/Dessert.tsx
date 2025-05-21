@@ -14,19 +14,17 @@ interface DessertProps {
 }
 
 function Dessert({ name, price, category, image }: DessertProps) {
-  
-  const [order,setOrder] = useContext(OrderContext) as OrderContextType;
-  
+  const [order, setOrder] = useContext(OrderContext) as OrderContextType;
+
   const [amount, setAmount] = useState<number>(0);
 
   // logic for removing item from order list
   useEffect(() => {
-        if (order) {
-      const dessert = order.find(item => item.name == name)
-      !dessert && setAmount(0)
+    if (order) {
+      const dessert = order.find((item) => item.name == name);
+      !dessert && setAmount(0);
     }
-  }, [order?.length])
-
+  }, [order?.length]);
 
   // component handlers
   function addToCartHandler() {
@@ -69,18 +67,20 @@ function Dessert({ name, price, category, image }: DessertProps) {
           <source media="(max-width: 425px)" srcSet={image.mobile} />
           <source media="(max-width: 1024px)" srcSet={image.tablet} />
           <img
-            className={`w-full rounded-2xl ${amount > 0 && "border-red-600"}`}
+            className={`rounded-2xl border-2 ${
+              amount > 0 ? "border-red" : "border-transparent"
+            }`}
             src={image.desktop}
             alt={name}
           />
         </picture>
         <div
-          className={`absolute w-[160px] h-[50px] right-[calc(50%-80px)] -bottom-[25px] rounded-2xl bg-white flex justify-center items-center ${
-            amount < 1 && "border hover:border-red-600"
-          } hover:text-red-600 overflow-clip`}
+          className={`absolute w-[160px] h-[50px] right-[calc(50%-80px)] -bottom-[25px] rounded-full bg-white flex justify-center items-center ${
+            amount < 1 && "border hover:border-rose-500"
+          } hover:text-red overflow-clip`}
         >
           {amount > 0 ? (
-            <div className="border border-red-600 bg-red-600 text-white w-full h-full flex justify-between items-center px-5">
+            <div className="border border-red bg-red text-white w-full h-full flex justify-between items-center px-5">
               {/* decrease button */}
               <button className="cursor-pointer" onClick={decreaseHandler}>
                 <img
@@ -111,11 +111,13 @@ function Dessert({ name, price, category, image }: DessertProps) {
           )}
         </div>
       </div>
-      <span className="text-gray-400">{category}</span>
-      <h1 className="font-semibold">{name}</h1>
-      <span className="text-red-600">
-        <b>${price}</b>
-      </span>
+      <div>
+        <span className="text-gray-400">{category}</span>
+        <h1 className="font-semibold">{name}</h1>
+        <span className="text-red">
+          <b>${price}</b>
+        </span>
+      </div>
     </div>
   );
 }
